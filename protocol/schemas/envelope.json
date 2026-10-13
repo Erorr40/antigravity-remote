@@ -1,0 +1,61 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "RelayEnvelope",
+  "description": "Outer framing message routed through relay server",
+  "type": "object",
+  "required": ["messageId", "timestamp", "type", "senderId", "targetId"],
+  "properties": {
+    "messageId": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "timestamp": {
+      "type": "integer",
+      "description": "Unix millisecond timestamp"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "HEARTBEAT_PING",
+        "HEARTBEAT_PONG",
+        "PAIRING_REQUEST",
+        "PAIRING_RESPONSE",
+        "KEY_EXCHANGE_INIT",
+        "KEY_EXCHANGE_ACK",
+        "ENCRYPTED_CONTAINER",
+        "RELAY_ERROR"
+      ]
+    },
+    "senderId": {
+      "type": "string"
+    },
+    "targetId": {
+      "type": "string"
+    },
+    "plainPayload": {
+      "type": "object",
+      "description": "Unencrypted payload used only during pre-handshake pairing and routing"
+    },
+    "encryptedPayload": {
+      "type": "object",
+      "required": ["senderKeyId", "nonce", "ciphertext", "sequenceNumber"],
+      "properties": {
+        "senderKeyId": {
+          "type": "string"
+        },
+        "nonce": {
+          "type": "string",
+          "description": "Base64 encoded initialization vector (12 bytes for AES-GCM or 24 bytes for XChaCha20)"
+        },
+        "ciphertext": {
+          "type": "string",
+          "description": "Base64 encoded ciphertext including authentication tag"
+        },
+        "sequenceNumber": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "name": "antigravity-remote-daemon",
+  "version": "1.0.0",
+  "description": "Laptop host daemon bridge for Antigravity Remote Mobile Client",
+  "main": "index.js",
+  "type": "commonjs",
+  "bin": {
+    "antigravity-daemon": "./index.js"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "pair": "node index.js --pair",
+    "status": "node index.js --status"
+  },
+  "keywords": [
+    "antigravity",
+    "remote",
+    "mobile",
+    "daemon",
+    "e2ee",
+    "websocket"
+  ],
+  "author": "Antigravity Team",
+  "license": "MIT"
+}

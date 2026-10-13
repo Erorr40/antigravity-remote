@@ -1,0 +1,63 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "HandshakeAndPairing",
+  "description": "Schemas for QR pairing and Curve25519 / X25519 key exchange",
+  "definitions": {
+    "PairingQrPayload": {
+      "type": "object",
+      "required": ["v", "relayUrl", "hostDeviceId", "hostPublicKey", "pairToken", "expiresAt"],
+      "properties": {
+        "v": {
+          "type": "integer",
+          "enum": [1]
+        },
+        "relayUrl": {
+          "type": "string",
+          "format": "uri"
+        },
+        "hostDeviceId": {
+          "type": "string"
+        },
+        "hostName": {
+          "type": "string"
+        },
+        "hostPublicKey": {
+          "type": "string",
+          "description": "Base64 Curve25519 public key of laptop host"
+        },
+        "pairToken": {
+          "type": "string",
+          "description": "Cryptographic ephemeral token"
+        },
+        "expiresAt": {
+          "type": "integer",
+          "description": "Unix millisecond timestamp"
+        }
+      }
+    },
+    "PairingRequest": {
+      "type": "object",
+      "required": ["pairToken", "mobileDeviceId", "deviceName", "mobilePublicKey"],
+      "properties": {
+        "pairToken": { "type": "string" },
+        "mobileDeviceId": { "type": "string" },
+        "deviceName": { "type": "string" },
+        "mobilePublicKey": {
+          "type": "string",
+          "description": "Base64 Curve25519 public key of mobile device"
+        }
+      }
+    },
+    "PairingResponse": {
+      "type": "object",
+      "required": ["success", "hostDeviceId"],
+      "properties": {
+        "success": { "type": "boolean" },
+        "hostDeviceId": { "type": "string" },
+        "hostPublicKey": { "type": "string" },
+        "salt": { "type": "string", "description": "Base64 random salt for HKDF key derivation" },
+        "errorMessage": { "type": "string" }
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "antigravity-relay-server",
+  "version": "1.0.0",
+  "description": "Off-LAN secure WebSocket relay for Antigravity Remote Client",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": ["antigravity", "relay", "websocket", "e2ee"],
+  "author": "Antigravity Team",
+  "license": "MIT"
+}

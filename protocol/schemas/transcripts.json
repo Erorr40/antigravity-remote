@@ -1,0 +1,93 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TranscriptSync",
+  "description": "Schemas for transcript synchronization and real-time streaming",
+  "definitions": {
+    "ToolCall": {
+      "type": "object",
+      "required": ["tool_name"],
+      "properties": {
+        "tool_name": { "type": "string" },
+        "tool_action": { "type": "string" },
+        "tool_summary": { "type": "string" },
+        "call_id": { "type": "string" },
+        "arguments": { "type": "object" },
+        "result": { "type": ["object", "string", "null"] },
+        "is_error": { "type": "boolean", "default": false }
+      }
+    },
+    "TranscriptStep": {
+      "type": "object",
+      "required": ["step_index", "source", "type", "status", "created_at"],
+      "properties": {
+        "step_index": { "type": "integer" },
+        "source": {
+          "type": "string",
+          "enum": ["USER_EXPLICIT", "MODEL", "SYSTEM"]
+        },
+        "type": {
+          "type": "string",
+          "enum": ["USER_INPUT", "PLANNER_RESPONSE", "TOOL_RESULT"]
+        },
+        "status": {
+          "type": "string",
+          "enum": ["DONE", "ERROR", "RUNNING"]
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "content": {
+          "type": "string"
+        },
+        "thinking": {
+          "type": "string"
+        },
+        "tool_calls": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/ToolCall" }
+        },
+        "media": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "mime_type": { "type": "string" },
+              "uri": { "type": "string" }
+            }
+          }
+        },
+        "truncated_fields": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "TranscriptSnapshotResponse": {
+      "type": "object",
+      "required": ["sessionId", "steps", "isLive"],
+      "properties": {
+        "sessionId": { "type": "string" },
+        "steps": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/TranscriptStep" }
+        },
+        "isLive": { "type": "boolean" }
+      }
+    },
+    "TranscriptDeltaEvent": {
+      "type": "object",
+      "required": ["sessionId", "kind", "stepIndex"],
+      "properties": {
+        "sessionId": { "type": "string" },
+        "kind": {
+          "type": "string",
+          "enum": ["APPEND_STEP", "UPDATE_STEP", "STREAM_THINKING", "STREAM_CONTENT"]
+        },
+        "stepIndex": { "type": "integer" },
+        "textChunk": { "type": "string" },
+        "step": { "$ref": "#/definitions/TranscriptStep" }
+      }
+    }
+  }
+}

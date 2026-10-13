@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "RemoteCommands",
+  "description": "Schemas for controlling Antigravity sessions and subagents remotely",
+  "definitions": {
+    "DispatchPrompt": {
+      "type": "object",
+      "required": ["sessionId", "prompt"],
+      "properties": {
+        "sessionId": { "type": "string" },
+        "prompt": { "type": "string" },
+        "createNewSession": { "type": "boolean", "default": false },
+        "model": { "type": "string" }
+      }
+    },
+    "AbortTask": {
+      "type": "object",
+      "required": ["sessionId"],
+      "properties": {
+        "sessionId": { "type": "string" },
+        "taskId": { "type": ["string", "null"] },
+        "reason": { "type": "string" }
+      }
+    },
+    "ToolInput": {
+      "type": "object",
+      "required": ["sessionId", "callId", "action"],
+      "properties": {
+        "sessionId": { "type": "string" },
+        "callId": { "type": "string" },
+        "action": {
+          "type": "string",
+          "enum": ["approve", "reject", "send_input"]
+        },
+        "inputText": { "type": "string" }
+      }
+    },
+    "CommandAck": {
+      "type": "object",
+      "required": ["requestId", "success", "timestamp"],
+      "properties": {
+        "requestId": { "type": "string" },
+        "success": { "type": "boolean" },
+        "message": { "type": "string" },
+        "timestamp": { "type": "integer" }
+      }
+    }
+  }
+}

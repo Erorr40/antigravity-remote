@@ -1,0 +1,49 @@
+name: antigravity_remote
+description: "Antigravity Remote Mobile Client for Android 13+"
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.5.0 <4.0.0'
+  flutter: '>=3.24.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  
+  # State Management
+  flutter_riverpod: ^2.5.1
+  
+  # Networking & Sockets
+  web_socket_channel: ^3.0.1
+  
+  # Cryptography (E2EE: X25519 & AES-256-GCM)
+  cryptography: ^2.7.2
+  
+  # Local Secure Storage & Persistence
+  flutter_secure_storage: ^9.2.2
+  shared_preferences: ^2.3.2
+  
+  # Biometric Authentication (Android 13+)
+  local_auth: ^2.3.0
+  
+  # QR Scanner for Host Pairing
+  mobile_scanner: ^5.2.3
+  
+  # Notifications & Android 13 Channels
+  flutter_local_notifications: ^17.2.3
+  
+  # Markdown & Code Highlighting
+  flutter_markdown: ^0.7.3+1
+  
+  # Utilities
+  uuid: ^4.5.1
+  intl: ^0.19.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
